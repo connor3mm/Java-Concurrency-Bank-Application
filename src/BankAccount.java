@@ -1,9 +1,12 @@
+import java.util.concurrent.locks.ReentrantLock;
+
 public class BankAccount {
     private int id;
     private String accountType;
     private String accountHolder;
-    private double balance;
+    private double balance = 0;
     private String accountNumber;
+    private ReentrantLock reentrantLock;
 
     public BankAccount() {
     }
@@ -13,8 +16,19 @@ public class BankAccount {
         this.id = id;
         this.accountType = accountType;
         this.accountHolder = accountHolder;
-        this.balance = 0;
+        //this.balance = 0;
         this.accountNumber = accountNumber;
+        reentrantLock = new ReentrantLock();
+
+    }
+
+    public BankAccount(int id, String accountType, double balance, String accountNumber) {
+        this.id = id;
+        this.accountType = accountType;
+        reentrantLock = new ReentrantLock();
+        this.balance = balance;
+        this.accountNumber = accountNumber;
+
     }
 
     public int getId() {
@@ -42,6 +56,15 @@ public class BankAccount {
     }
 
     public double getBalance() {
+        reentrantLock.lock();
+
+        try {
+            System.out.println("Thread with a name " + Thread.currentThread().getName() + " and id " + Thread.currentThread().getId() + " is checking the balance for account " + accountNumber);
+            System.out.println("The balance is: " + balance);
+        } finally {
+            reentrantLock.unlock();
+        }
+
         return balance;
     }
 

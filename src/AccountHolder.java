@@ -4,6 +4,8 @@ import java.util.List;
 public class AccountHolder {
     private int id;
     private String name;
+    BankAccount bankAccount;
+
 
     public int getId() {
         return id;
@@ -21,9 +23,10 @@ public class AccountHolder {
         this.name = name;
     }
 
-    public AccountHolder(int id, String name) {
+    public AccountHolder(int id, String name, BankAccount bankAccount) {
         this.id = id;
         this.name = name;
+        this.bankAccount = bankAccount;
     }
 
     public BankAccount openAccount(int id, String accountType, String accountHolder, String accountNumber) {
