@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
@@ -5,17 +7,19 @@ import java.util.concurrent.locks.ReentrantLock;
 public class BankAccount {
     private int id;
     private String accountType;
-    private String accountHolder;
+    private AccountHolder accountHolder;
     private double balance = 0;
     private String accountNumber;
     private ReentrantLock reentrantLock;
     private Condition condition;
+    private int accountHolderCount = 0;
+    List<AccountHolder> list = new ArrayList<AccountHolder>();
 
     public BankAccount() {
     }
 
 
-    public BankAccount(int id, String accountType, String accountHolder, String accountNumber) {
+    public BankAccount(int id, String accountType, AccountHolder accountHolder, String accountNumber) {
         this.id = id;
         this.accountType = accountType;
         this.accountHolder = accountHolder;
@@ -52,12 +56,20 @@ public class BankAccount {
         this.accountType = accountType;
     }
 
-    public String getAccountHolder() {
+    public AccountHolder getAccountHolder() {
         return accountHolder;
     }
 
-    public void setAccountHolder(String accountHolder) {
+    public void setAccountHolder(AccountHolder accountHolder) {
         this.accountHolder = accountHolder;
+    }
+
+    public List<AccountHolder> getList() {
+        return list;
+    }
+
+    public void addAccountHolder(AccountHolder accountHolder) {
+        list.add(accountHolder);
     }
 
     public double getBalance() {

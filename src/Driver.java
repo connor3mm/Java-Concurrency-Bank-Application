@@ -36,13 +36,17 @@ public class Driver {
         twoThread.start();
 //----------------------------------------------------------------------------------------------------------------
         //Test2.1 for withdrawing money
-        WithdrawRunnable withdrawObject1 = new WithdrawRunnable(bankAccount, accountHolder1,10);
-        WithdrawRunnable withdrawObject2 = new WithdrawRunnable(bankAccount, accountHolder2,20);
+        WithdrawRunnable withdrawObject1 = new WithdrawRunnable(bankAccount);
+        //WithdrawRunnable withdrawObject2 = new WithdrawRunnable(bankAccount, 20);
 
+        bankAccount.addAccountHolder(accountHolder1);
+        bankAccount.addAccountHolder(accountHolder2);
+
+        //fix this, to use account holders instead of setting
         Thread threeThread = new Thread(withdrawObject1);
         threeThread.setName("Angel");
         threeThread.start();
-        Thread abcThread = new Thread(withdrawObject2);
+        Thread abcThread = new Thread(withdrawObject1);
         abcThread.setName("Ramsey");
         abcThread.start();
 

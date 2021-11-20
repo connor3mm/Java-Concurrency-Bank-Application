@@ -4,11 +4,16 @@ public class WithdrawRunnable implements Runnable{
     private static final int DELAY = 1;
 
     public double amount;
-    public WithdrawRunnable(BankAccount bankAccount, AccountHolder accountHolder ,double amount) {
-        this.bankAccount = bankAccount;
-        this.accountHolder = accountHolder;
-        this.amount = amount;
+
+    public WithdrawRunnable(BankAccount bankAccount) {
+      accountHolder = new AccountHolder(0, "", bankAccount);
     }
+
+   /* public WithdrawRunnable(BankAccount bankAccount ,double amount) {
+        this.bankAccount = bankAccount;
+
+        this.amount = amount;
+    }*/
 
     @Override
     public void run() {
