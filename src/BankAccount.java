@@ -1,3 +1,5 @@
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class BankAccount {
@@ -7,6 +9,7 @@ public class BankAccount {
     private double balance = 0;
     private String accountNumber;
     private ReentrantLock reentrantLock;
+    private Condition condition;
 
     public BankAccount() {
     }
@@ -19,6 +22,7 @@ public class BankAccount {
         //this.balance = 0;
         this.accountNumber = accountNumber;
         reentrantLock = new ReentrantLock();
+        condition = reentrantLock.newCondition();
 
     }
 
@@ -26,6 +30,7 @@ public class BankAccount {
         this.id = id;
         this.accountType = accountType;
         reentrantLock = new ReentrantLock();
+        condition = reentrantLock.newCondition();
         this.balance = balance;
         this.accountNumber = accountNumber;
 
@@ -59,13 +64,14 @@ public class BankAccount {
         reentrantLock.lock();
 
         try {
-            System.out.println("Thread with a name " + Thread.currentThread().getName() + " and id " + Thread.currentThread().getId() + " is checking the balance for account " + accountNumber);
+            System.out.println("Thread with a name " + Thread.currentThread().getName() + " and id " + Thread.currentThread().getId() +
+                    " is checking the balance for account " + accountNumber);
             System.out.println("The balance is: " + balance);
+            condition.signalAll();
+            return balance;
         } finally {
             reentrantLock.unlock();
         }
-
-        return balance;
     }
 
     public void setBalance(double balance) {
@@ -81,15 +87,39 @@ public class BankAccount {
     }
 
     public void deposit(double amount) {
-        this.balance += amount;
+        System.out.println("The current balance in account number:" + accountNumber + " is: " + balance);
+
+        reentrantLock.lock();
+        try {
+            System.out.println("Thread with a name " + Thread.currentThread().getName() + " and id " + Thread.currentThread().getId() +
+                    " is deposing money for account " + accountNumber);
+            this.balance += amount;
+            System.out.println("The new balance is: " + balance);
+            condition.signalAll();
+        } finally {
+            reentrantLock.unlock();
+        }
     }
 
-    public void withdraw(double amount) {
-//        if (amount > balance) {
-//            System.out.println("Not enough money in account");
-//            return;
-//        }
-        this.balance -= amount;
+    public void withdraw(double amount) throws InterruptedException{
+        System.out.println("The current balance in account number: " + accountNumber + " is: " + balance);
+        boolean stillWaiting = true;
+        reentrantLock.lock();
+        try {
+            while (balance < amount){
+                if (!stillWaiting){
+                    Thread.currentThread().interrupt();
+                    stillWaiting = condition.await(10, TimeUnit.SECONDS);
+                }
+            }
+            System.out.println("Thread with a name " + Thread.currentThread().getName() + " and id " + Thread.currentThread().getId() +
+                    " is withdrawing money from account " + accountNumber);
+            this.balance -= amount;
+            System.out.println("The left balance is: " + balance);
+            //condition.signalAll();
+        } finally {
+            reentrantLock.unlock();
+        }
     }
 
     public void transferMoney(BankAccount sender, BankAccount receiver, double amount) {
