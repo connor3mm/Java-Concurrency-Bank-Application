@@ -17,6 +17,13 @@ public class BankAccount {
     List<AccountHolder> list = new ArrayList<AccountHolder>();
 
     public BankAccount() {
+        this.id = 0;
+        this.accountType = "";
+        this.accountNumber = "";
+        this.accountHolder = null;
+        reentrantLock = new ReentrantLock();
+        condition = reentrantLock.newCondition();
+
     }
 
 

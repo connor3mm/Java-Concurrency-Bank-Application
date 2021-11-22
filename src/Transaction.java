@@ -1,7 +1,7 @@
 public class Transaction extends Thread{
 
     public static enum Type{
-        DEPOSIT(1), WITHDRAW(2), BALANCE(3), TRANSFERIN(4), TRANSFEROUT(5);
+        DEPOSIT(1), WITHDRAW(2), BALANCE(3), TRANSFERIN(4), TRANSFEROUT(5), EDIT(6);
 
         private Type(int value){
         }
@@ -12,6 +12,10 @@ public class Transaction extends Thread{
     private Employee employee;
     private double amount;
     private AccountHolder holder;
+    private int id;
+    private String newAccountNumber;
+    private String newAccountType;
+    private int newId;
 
 
 
@@ -32,6 +36,16 @@ public class Transaction extends Thread{
     public Transaction(Type transactionType, BankAccount bankAccount) {
         this.transactionType = transactionType;
         this.bankAccount = bankAccount;
+    }
+
+    public Transaction(Type transactionType, BankAccount bankAccount, int id, int newId, String newAccountNumber, String newAccountType, Employee employee) {
+        this.transactionType = transactionType;
+        this.bankAccount = bankAccount;
+        this.id = id;
+        this.newId = newId;
+        this.newAccountNumber = newAccountNumber;
+        this.newAccountType = newAccountType;
+        this.employee = employee;
     }
 
     public void run(){
@@ -57,6 +71,10 @@ public class Transaction extends Thread{
 
             case TRANSFEROUT:
                 this.employee.transferMoneyOut(bankAccount, amount);
+                break;
+
+            case EDIT:
+                this.employee.editAccount(id,newId,newAccountNumber, newAccountType);
                 break;
 
             default:

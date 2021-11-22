@@ -1,9 +1,11 @@
 public class DriverTest {
+
     public static void main(String[] args) {
         BankAccount bankAccount = new BankAccount(1, "Savings", 1200, "1234");
         Employee employee = new Employee(1, "John");
+        Employee employee2 = new Employee(2, "James");
         AccountHolder holder = new AccountHolder(1, "Tamara", bankAccount);
-        double amount = 100;
+        employee.openAccount(1, "Savings", holder, "12");
 
         //Test 1
         testBalance(bankAccount);
@@ -22,6 +24,8 @@ public class DriverTest {
         //Test5
         testingInsufficientFunds(holder, bankAccount);
 
+        //Test6
+        employeesModifyingAccountDetails(employee, employee2, bankAccount);
 
 
     }
@@ -222,6 +226,37 @@ public class DriverTest {
 
     }
 
+    /**
+     * Test 6
+     * @param employee
+     * @param employee2
+     * @param bankAccount
+     */
+    public static void employeesModifyingAccountDetails(Employee employee, Employee employee2, BankAccount bankAccount) {
+
+        //fix this
+        for (int i = 0; i < 10; i++) {
+            Transaction transaction = new Transaction(Transaction.Type.EDIT, bankAccount, 1, 7, "4567", "Premium", employee);
+            transaction.start();
+            bankAccount.setId(1);
+
+        }
+
+
+        for (int i = 0; i < 1000; i++) {
+            Transaction transaction = new Transaction(Transaction.Type.EDIT, bankAccount, 1, 8, "7890", "Premium", employee2);
+            transaction.start();
+
+        }
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            System.out.println(e);
+        }
+
+        System.out.println("--------------------------------");
+    }
 
 
 }
