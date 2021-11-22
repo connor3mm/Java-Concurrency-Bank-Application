@@ -9,6 +9,7 @@ public class Employee {
     private ReentrantLock reentrantLock;
     private List<BankAccount> bankAccountList = new ArrayList<>();
     private Condition condition;
+    AccountHolder holder;
 
     public int getId() {
         return id;
@@ -48,9 +49,12 @@ public class Employee {
         bankAccountList.removeIf(currentAccount -> currentAccount.getId() == id);
     }
 
-    public void editAccount(int id, String newAccountNumber, String newAccountType) {
+    public synchronized void editAccount(int currentId, int newId, String newAccountNumber, String newAccountType) {
         //Get account to edit
-        BankAccount accountToEdit = null;
+        BankAccount accountToEdit = new BankAccount();
+        System.out.println("Thread with a name " + Thread.currentThread().getName() + " and id " + Thread.currentThread().getId() +
+                " is changing the details for account " + accountToEdit.getAccountNumber());
+
         for (BankAccount currentAccount : bankAccountList) {
             if (currentAccount.getId() == id) {
                 accountToEdit = currentAccount;
@@ -58,20 +62,16 @@ public class Employee {
             }
         }
 
-        if (accountToEdit == null) return;
 
-        //edit
-        accountToEdit.setAccountNumber(newAccountNumber);
-        accountToEdit.setAccountType(newAccountType);
+        if (accountToEdit.getId() == 0) return;
+
 
         //put account bank in the list
         bankAccountList.add(accountToEdit);
+        System.out.println("Thread with a name " + Thread.currentThread().getName() + " and id " + Thread.currentThread().getId() +
+                " has modified the account");
+        System.out.println("The new details are: " + accountToEdit.getAccountNumber() + " " + accountToEdit.getAccountType() + " " + accountToEdit.getId());
     }
-/*
-    public void transferMoneyEmployee(BankAccount sender, BankAccount receiver, double amount) {
-        sender.setBalance(sender.getBalance() - amount);
-        receiver.setBalance(receiver.getBalance() + amount);
-    }*/
 
     public void transferMoneyIn(BankAccount receiver, double amount) {
         reentrantLock.lock();
@@ -86,19 +86,19 @@ public class Employee {
         System.out.println("The new balance is: " + receiver.getBalance());
     }
 
-    public void transferMoneyOut(BankAccount receiver, double amount) {
+    public void transferMoneyOut(BankAccount sender, double amount) {
         reentrantLock.lock();
         try {
             System.out.println("Thread with a name " + Thread.currentThread().getName() + " and id " + Thread.currentThread().getId() +
-                    " is transferring money to account " + receiver.getAccountNumber());
-            receiver.withdraw(amount);
+                    " is transferring money to account " + sender.getAccountNumber());
+            sender.withdraw(amount);
             condition.signalAll();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } finally {
             reentrantLock.unlock();
         }
-        System.out.println("The new balance is: " + receiver.getBalance());
+        System.out.println("The new balance is: " + sender.getBalance());
     }
 
 }
