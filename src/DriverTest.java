@@ -16,8 +16,8 @@ public class DriverTest {
         testDepositAndWithdraw(holder, bankAccount);
 
         //Test4
-        testingEmployeeTransferPlusTestThree(employee, holder, bankAccount);
-        testingEmployeeTransferPlusTestThreePart2(employee, holder, bankAccount);
+        testingEmployeeTransferIn(employee, holder, bankAccount);
+        testingEmployeeTransferOut(employee, holder, bankAccount);
 
         //Test5
 
@@ -133,7 +133,7 @@ public class DriverTest {
      * @param holder
      * @param bankAccount
      */
-    public static void testingEmployeeTransferPlusTestThree(Employee employee, AccountHolder holder, BankAccount bankAccount) {
+    public static void testingEmployeeTransferIn(Employee employee, AccountHolder holder, BankAccount bankAccount) {
 
         for (int i = 0; i < 10; i++) {
             Transaction transaction = new Transaction(Transaction.Type.TRANSFERIN, bankAccount, 100, employee);
@@ -159,7 +159,7 @@ public class DriverTest {
     }
 
 
-    public static void testingEmployeeTransferPlusTestThreePart2(Employee employee, AccountHolder holder, BankAccount bankAccount) {
+    public static void testingEmployeeTransferOut(Employee employee, AccountHolder holder, BankAccount bankAccount) {
 
         for (int i = 0; i < 10; i++) {
             Transaction transaction = new Transaction(Transaction.Type.TRANSFEROUT, bankAccount, 100, employee);
@@ -191,7 +191,32 @@ public class DriverTest {
      * @param holder
      * @param bankAccount
      */
-    public static void testingInsufficientFunds(Employee employee, AccountHolder holder, BankAccount bankAccount) {
+    public static void testingInsufficientFunds(AccountHolder holder, BankAccount bankAccount) {
+
+        bankAccount.setBalance(0);
+
+        for (int i = 0; i < 10; i++) {
+            Transaction transaction = new Transaction(Transaction.Type.WITHDRAW, bankAccount, 100, holder);
+            transaction.start();
+        }
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            System.out.println(e);
+        }
+
+        for (int i = 0; i < 10; i++) {
+            Transaction transaction = new Transaction(Transaction.Type.DEPOSIT, bankAccount, 100, holder);
+            transaction.start();
+        }
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            System.out.println(e);
+        }
+        System.out.println("--------------------------------");
 
     }
 
