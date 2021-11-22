@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class Employee {
@@ -7,6 +8,7 @@ public class Employee {
     private String name;
     private ReentrantLock reentrantLock;
     private List<BankAccount> bankAccountList = new ArrayList<>();
+    private Condition condition;
 
     public int getId() {
         return id;
@@ -27,6 +29,8 @@ public class Employee {
     public Employee(int id, String name) {
         this.id = id;
         this.name = name;
+        reentrantLock = new ReentrantLock();
+        condition = reentrantLock.newCondition();
     }
 
     public void openAccount(int id, String accountType, AccountHolder accountHolder, String accountNumber) {
@@ -69,13 +73,28 @@ public class Employee {
         receiver.setBalance(receiver.getBalance() + amount);
     }*/
 
-    public void transferMoney(BankAccount receiver, double amount) {
+    public void transferMoneyIn(BankAccount receiver, double amount) {
         reentrantLock.lock();
         try {
             System.out.println("Thread with a name " + Thread.currentThread().getName() + " and id " + Thread.currentThread().getId() +
                     " is transferring money to account " + receiver.getAccountNumber());
-            receiver.setBalance(receiver.getBalance()-amount);
-           // condition.signalAll();
+            receiver.deposit(amount);
+           condition.signalAll();
+        } finally {
+            reentrantLock.unlock();
+        }
+        System.out.println("The new balance is: " + receiver.getBalance());
+    }
+
+    public void transferMoneyOut(BankAccount receiver, double amount) {
+        reentrantLock.lock();
+        try {
+            System.out.println("Thread with a name " + Thread.currentThread().getName() + " and id " + Thread.currentThread().getId() +
+                    " is transferring money to account " + receiver.getAccountNumber());
+            receiver.withdraw(amount);
+            condition.signalAll();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         } finally {
             reentrantLock.unlock();
         }

@@ -106,7 +106,7 @@ public class BankAccount {
         reentrantLock.lock();
         try {
             System.out.println("Thread with a name " + Thread.currentThread().getName() + " and id " + Thread.currentThread().getId() +
-                    " is deposing money for account " + accountNumber);
+                    " is deposing money for account " + accountNumber + Calendar.getInstance().getTime());
             this.balance += amount;
             System.out.println("The new balance is: " + balance);
             condition.signalAll();
@@ -127,7 +127,7 @@ public class BankAccount {
                 }
             }
             System.out.println("Thread with a name " + Thread.currentThread().getName() + " and id " + Thread.currentThread().getId() +
-                    " is withdrawing money from account " + accountNumber);
+                    " is withdrawing money from account " + accountNumber + Calendar.getInstance().getTime());
             this.balance -= amount;
             System.out.println("The left balance is: " + balance);
             //condition.signalAll();

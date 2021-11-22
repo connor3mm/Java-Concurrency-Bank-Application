@@ -15,7 +15,7 @@ public class EmployeeTransfrerRunnable implements Runnable{
     @Override
     public void run() {
         try {
-            employee.transferMoney(receiver, amount);
+            employee.transferMoneyIn(receiver, amount);
             Thread.sleep(DELAY);
         } catch (InterruptedException e) {
             e.printStackTrace();

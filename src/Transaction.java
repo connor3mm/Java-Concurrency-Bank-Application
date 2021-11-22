@@ -1,7 +1,7 @@
 public class Transaction extends Thread{
 
     public static enum Type{
-        DEPOSIT(1), WITHDRAW(2), BALANCE(3), TRANSFER(4);
+        DEPOSIT(1), WITHDRAW(2), BALANCE(3), TRANSFERIN(4), TRANSFEROUT(5);
 
         private Type(int value){
         }
@@ -11,6 +11,7 @@ public class Transaction extends Thread{
     private BankAccount bankAccount;
     private Employee employee;
     private double amount;
+    private AccountHolder holder;
 
 
 
@@ -19,6 +20,13 @@ public class Transaction extends Thread{
         this.bankAccount = bankAccount;
         this.amount = amount;
         this.employee = employee;
+    }
+
+    public Transaction(Type transactionType, BankAccount bankAccount, double amount, AccountHolder holder) {
+        this.transactionType = transactionType;
+        this.bankAccount = bankAccount;
+        this.amount = amount;
+        this.holder = holder;
     }
 
     public Transaction(Type transactionType, BankAccount bankAccount) {
@@ -30,7 +38,6 @@ public class Transaction extends Thread{
         switch (this.transactionType) {
             case DEPOSIT:
                 this.bankAccount.deposit(this.amount);
-                this.bankAccount.getBalance();
                 break;
 
             case WITHDRAW:
@@ -39,17 +46,22 @@ public class Transaction extends Thread{
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                this.bankAccount.getBalance();
                 break;
 
             case BALANCE:
                 this.bankAccount.getBalance();
                 break;
-            case TRANSFER:
-                this.employee.transferMoney(bankAccount, amount);
+            case TRANSFERIN:
+                this.employee.transferMoneyIn(bankAccount, amount);
                 break;
+
+            case TRANSFEROUT:
+                this.employee.transferMoneyOut(bankAccount, amount);
+                break;
+
             default:
                 System.out.println("The transaction is not valid");
+
         }
     }
 }
