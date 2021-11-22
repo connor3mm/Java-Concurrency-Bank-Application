@@ -56,8 +56,14 @@ public class Employee {
                 " is changing the details for account " + accountToEdit.getAccountNumber());
 
         for (BankAccount currentAccount : bankAccountList) {
-            if (currentAccount.getId() == id) {
-                accountToEdit = currentAccount;
+            if (currentAccount.getId() == currentId) {
+                currentAccount = accountToEdit;
+                accountToEdit.setId(newId);
+
+                accountToEdit.setAccountNumber(newAccountNumber);
+                accountToEdit.setAccountType(newAccountType);
+
+
                 bankAccountList.remove(currentAccount);
             }
         }
