@@ -95,6 +95,10 @@ public class Driver {
         threadTwelve.start();
 //----------------------------------------------------------------------------------------------------------------
         //Test4  */
+        BankAccount bankAccount2 = new BankAccount(2,"Savings", 1200, "1233");
+        AccountHolder accountHolder5 = new AccountHolder(5,"John", bankAccount);
+        AccountHolder accountHolder6 = new AccountHolder(6,"James", bankAccount);
+
 
         
 

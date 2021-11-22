@@ -1,5 +1,5 @@
 public class PremiumAccount extends BankAccount {
-    public PremiumAccount(int id, String accountType, String accountHolder, String accountNumber) {
+    public PremiumAccount(int id, String accountType, AccountHolder accountHolder, String accountNumber) {
         super(id, accountType, accountHolder, accountNumber);
     }
 

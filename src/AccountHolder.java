@@ -29,7 +29,7 @@ public class AccountHolder {
         this.bankAccount = bankAccount;
     }
 
-    public BankAccount openAccount(int id, String accountType, String accountHolder, String accountNumber) {
+    public BankAccount openAccount(int id, String accountType, AccountHolder accountHolder, String accountNumber) {
         new BankAccount();
         return switch (accountType) {
             case "Savings" -> new SavingsAccount(id, accountType, accountHolder, accountNumber);

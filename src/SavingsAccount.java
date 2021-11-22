@@ -1,5 +1,5 @@
 public class SavingsAccount extends BankAccount{
-    public SavingsAccount(int id, String accountType, String accountHolder, String accountNumber) {
+    public SavingsAccount(int id, String accountType, AccountHolder accountHolder, String accountNumber) {
         super(id, accountType, accountHolder, accountNumber);
     }
 

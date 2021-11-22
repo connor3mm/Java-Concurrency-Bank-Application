@@ -70,6 +70,7 @@ public class BankAccount {
 
     public void addAccountHolder(AccountHolder accountHolder) {
         list.add(accountHolder);
+        accountHolderCount++;
     }
 
     public double getBalance() {
@@ -134,8 +135,19 @@ public class BankAccount {
         }
     }
 
-    public void transferMoney(BankAccount sender, BankAccount receiver, double amount) {
-        sender.setBalance(balance - amount);
-        receiver.setBalance(balance + amount);
-    }
+   /* public void transferMoney(BankAccount sender, BankAccount receiver, double amount) {
+        reentrantLock.lock();
+        try {
+            System.out.println("Thread with a name " + Thread.currentThread().getName() + " and id " + Thread.currentThread().getId() +
+                    " is transferring money from account " + sender.getAccountNumber() + "to account " + receiver.getAccountNumber());
+            this.balance -= amount;
+            condition.signalAll();
+        } finally {
+            reentrantLock.unlock();
+        }
+
+        receiver.deposit(amount);
+        System.out.println("The new balance is: " + receiver.getBalance());
+    }*/
+
 }
