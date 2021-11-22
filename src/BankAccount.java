@@ -123,8 +123,9 @@ public class BankAccount {
             while (balance < amount){
                 if (!stillWaiting){
                     Thread.currentThread().interrupt();
-                    stillWaiting = condition.await(10, TimeUnit.SECONDS);
                 }
+
+                stillWaiting = condition.await(10, TimeUnit.SECONDS);
             }
             System.out.println("Thread with a name " + Thread.currentThread().getName() + " and id " + Thread.currentThread().getId() +
                     " is withdrawing money from account " + accountNumber + Calendar.getInstance().getTime());
