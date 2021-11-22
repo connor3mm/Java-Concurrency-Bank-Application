@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
@@ -79,7 +80,7 @@ public class BankAccount {
         try {
             System.out.println("Thread with a name " + Thread.currentThread().getName() + " and id " + Thread.currentThread().getId() +
                     " is checking the balance for account " + accountNumber);
-            System.out.println("The balance is: " + balance);
+            System.out.println("The balance is: " + balance  + Calendar.getInstance().getTime());
             condition.signalAll();
             return balance;
         } finally {
