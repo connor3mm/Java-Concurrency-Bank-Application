@@ -87,9 +87,9 @@ public class BankAccount {
 
         reentrantLock.lock();
         try {
-            System.out.println("Thread with a name " + Thread.currentThread().getName() + " and id " + Thread.currentThread().getId() +
-                    " is checking the balance for account " + accountNumber);
-            System.out.println("The balance is: " + balance + Calendar.getInstance().getTime());
+            System.out.println("Thread name: " + Thread.currentThread().getName() + ", ID: " + Thread.currentThread().getId() +
+                    " checking balance of account " + accountNumber);
+            System.out.println("The balance is: " + balance + ", Date and Time: " + Calendar.getInstance().getTime() + "\n");
             condition.signalAll();
             return balance;
         } finally {
@@ -114,14 +114,14 @@ public class BankAccount {
      * @param amount
      */
     public void deposit(double amount) {
-        System.out.println("The current balance in account number:" + accountNumber + " is: " + balance);
+        System.out.println("Current balance for account number: " + accountNumber + " -> " + balance);
 
         reentrantLock.lock();
         try {
-            System.out.println("Thread with a name " + Thread.currentThread().getName() + " and id " + Thread.currentThread().getId() +
-                    " is deposing money for account " + accountNumber + Calendar.getInstance().getTime());
+            System.out.println("Thread name: " + Thread.currentThread().getName() + ", ID " + Thread.currentThread().getId() +
+                    " depositing money for account " + accountNumber + ", Date and Time: " + Calendar.getInstance().getTime());
             this.balance += amount;
-            System.out.println("The new balance is: " + balance);
+            System.out.println("The new balance is: " + balance + "\n");
             condition.signalAll();
         } finally {
             reentrantLock.unlock();
@@ -134,7 +134,7 @@ public class BankAccount {
      * @throws InterruptedException
      */
     public void withdraw(double amount) throws InterruptedException {
-        System.out.println("The current balance in account number: " + accountNumber + " is: " + balance);
+        System.out.println("The current balance in account number: " + accountNumber + " -> " + balance);
         boolean stillWaiting = true;
         reentrantLock.lock();
         try {
@@ -145,10 +145,10 @@ public class BankAccount {
 
                 stillWaiting = condition.await(10, TimeUnit.SECONDS);
             }
-            System.out.println("Thread with a name " + Thread.currentThread().getName() + " and id " + Thread.currentThread().getId() +
-                    " is withdrawing money from account " + accountNumber + Calendar.getInstance().getTime());
+            System.out.println("Thread name: " + Thread.currentThread().getName() + ", ID: " + Thread.currentThread().getId() +
+                    " withdrawing money from account " + accountNumber + ", Date and Time: " + Calendar.getInstance().getTime());
             this.balance -= amount;
-            System.out.println("The left balance is: " + balance);
+            System.out.println("The left balance is: " + balance + "\n");
             condition.signalAll();
         } finally {
             reentrantLock.unlock();

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
@@ -58,8 +59,8 @@ public class Employee {
         reentrantLock.lock();
 
         try {
-            System.out.println("Thread with a name " + Thread.currentThread().getName() + " and id " + Thread.currentThread().getId() +
-                    " is trying to change the details for account " + currentId);
+            System.out.println("Thread name: " + Thread.currentThread().getName() + ", ID " + Thread.currentThread().getId() +
+                    " trying to change details of account " + currentId  + ", Date and Time: " + Calendar.getInstance().getTime());
 
             for (BankAccount currentAccount : banklist.getBankAccountList()) {
                 if (currentAccount.getId() == currentId) {
@@ -79,10 +80,10 @@ public class Employee {
 
             //put account bank in the list
             banklist.getBankAccountList().add(accountToEdit);
-            System.out.println("Thread with a name " + Thread.currentThread().getName() + " and id " + Thread.currentThread().getId() +
-                    " has modified the account");
+            System.out.println("Thread name: " + Thread.currentThread().getName() + ", ID: " + Thread.currentThread().getId() +
+                    " has modified the account" + ", Date and Time: " + Calendar.getInstance().getTime());
 
-            System.out.println("The new details are: " + accountToEdit.getAccountNumber() + " " + accountToEdit.getAccountType() + " " + accountToEdit.getId());
+            System.out.println("The new details are: " + accountToEdit.getAccountNumber() + " " + accountToEdit.getAccountType() + " " + accountToEdit.getId() + "\n");
 
 //            condition.signalAll();
         } finally {
@@ -95,9 +96,8 @@ public class Employee {
 
         reentrantLock.lock();
         try {
-            System.out.println("Thread with a name " + Thread.currentThread().getName() + " and id " + Thread.currentThread().getId() +
-                            Thread.currentThread().getState() +
-                    " is transferring money to account " + receiver.getAccountNumber());
+            System.out.println("Thread name: " + Thread.currentThread().getName() + ", ID: " + Thread.currentThread().getId() +
+                    " transferring money to " + receiver.getAccountNumber() + ", Date and Time: " + Calendar.getInstance().getTime() + "\n");
             receiver.deposit(amount);
            condition.signalAll();
         } finally {
@@ -109,8 +109,8 @@ public class Employee {
     public void transferMoneyOut(BankAccount sender, double amount) {
         reentrantLock.lock();
         try {
-            System.out.println("Thread with a name " + Thread.currentThread().getName() + " and id " + Thread.currentThread().getId() +
-                    " is transferring money to account " + sender.getAccountNumber());
+            System.out.println("Thread name: " + Thread.currentThread().getName() + ", ID: " + Thread.currentThread().getId() +
+                    " transferring money to  " + sender.getAccountNumber() + ", Date and Time: " + Calendar.getInstance().getTime() + "\n");
             sender.withdraw(amount);
             condition.signalAll();
         } catch (InterruptedException e) {
