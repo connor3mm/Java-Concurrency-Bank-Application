@@ -15,7 +15,6 @@ public class Transaction extends Thread{
     private int id;
     private String newAccountNumber;
     private String newAccountType;
-    private int newId;
 
 
 
@@ -38,11 +37,10 @@ public class Transaction extends Thread{
         this.bankAccount = bankAccount;
     }
 
-    public Transaction(Type transactionType, BankAccount bankAccount, int id, int newId, String newAccountNumber, String newAccountType, Employee employee) {
+    public Transaction(Type transactionType, BankAccount bankAccount, int id, String newAccountNumber, String newAccountType, Employee employee) {
         this.transactionType = transactionType;
         this.bankAccount = bankAccount;
         this.id = id;
-        this.newId = newId;
         this.newAccountNumber = newAccountNumber;
         this.newAccountType = newAccountType;
         this.employee = employee;
@@ -74,7 +72,7 @@ public class Transaction extends Thread{
                 break;
 
             case EDIT:
-                this.employee.editAccount(id,newId,newAccountNumber, newAccountType);
+                this.employee.editAccount(id,newAccountNumber, newAccountType);
                 break;
 
             default:

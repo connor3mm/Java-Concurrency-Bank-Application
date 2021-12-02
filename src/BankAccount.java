@@ -16,6 +16,7 @@ public class BankAccount {
     private int accountHolderCount = 0;
     List<AccountHolder> list = new ArrayList<AccountHolder>();
 
+
     public BankAccount() {
         this.id = 0;
         this.accountType = "";

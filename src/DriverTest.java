@@ -236,17 +236,20 @@ public class DriverTest {
 
         //fix this
         for (int i = 0; i < 10; i++) {
-            Transaction transaction = new Transaction(Transaction.Type.EDIT, bankAccount, 1, 7, "4567", "Premium", employee);
+            Transaction transaction = new Transaction(Transaction.Type.EDIT, bankAccount, 1,"4567", "Premium", employee);
             transaction.start();
-            bankAccount.setId(1);
+        }
 
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            System.out.println(e);
         }
 
 
-        for (int i = 0; i < 1000; i++) {
-            Transaction transaction = new Transaction(Transaction.Type.EDIT, bankAccount, 1, 8, "7890", "Premium", employee2);
+        for (int i = 0; i < 10; i++) {
+            Transaction transaction = new Transaction(Transaction.Type.EDIT, bankAccount, 1,"7890", "Premium", employee2);
             transaction.start();
-
         }
 
         try {

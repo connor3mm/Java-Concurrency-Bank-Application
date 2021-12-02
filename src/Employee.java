@@ -7,8 +7,9 @@ public class Employee {
     private int id;
     private String name;
     private ReentrantLock reentrantLock;
-    private List<BankAccount> bankAccountList = new ArrayList<>();
     private Condition condition;
+    BankMain banklist = BankMain.getInstance();
+
     AccountHolder holder;
 
     public int getId() {
@@ -42,47 +43,60 @@ public class Employee {
             case "Premium" -> new PremiumAccount(id, accountType, accountHolder, accountNumber);
             default -> new BankAccount();
         };
-        this.bankAccountList.add(newAccount);
+
+        banklist.addBankAccount(newAccount);
     }
 
     public void deleteAccount(int id) {
-        bankAccountList.removeIf(currentAccount -> currentAccount.getId() == id);
+        banklist.getBankAccountList().removeIf(currentAccount -> currentAccount.getId() == id);
     }
 
-    public synchronized void editAccount(int currentId, int newId, String newAccountNumber, String newAccountType) {
+    public void editAccount(int currentId, String newAccountNumber, String newAccountType) {
         //Get account to edit
-        BankAccount accountToEdit = new BankAccount();
-        System.out.println("Thread with a name " + Thread.currentThread().getName() + " and id " + Thread.currentThread().getId() +
-                " is changing the details for account " + accountToEdit.getAccountNumber());
+        BankAccount accountToEdit = null;
 
-        for (BankAccount currentAccount : bankAccountList) {
-            if (currentAccount.getId() == currentId) {
-                currentAccount = accountToEdit;
-                accountToEdit.setId(newId);
+        reentrantLock.lock();
 
-                accountToEdit.setAccountNumber(newAccountNumber);
-                accountToEdit.setAccountType(newAccountType);
+        try {
+            System.out.println("Thread with a name " + Thread.currentThread().getName() + " and id " + Thread.currentThread().getId() +
+                    " is trying to change the details for account " + currentId);
 
+            for (BankAccount currentAccount : banklist.getBankAccountList()) {
+                if (currentAccount.getId() == currentId) {
+                    accountToEdit = new BankAccount();
+                    accountToEdit.setId(currentId);
+                    currentAccount = accountToEdit;
 
-                bankAccountList.remove(currentAccount);
+                    accountToEdit.setAccountNumber(newAccountNumber);
+                    accountToEdit.setAccountType(newAccountType);
+
+                    banklist.getBankAccountList().remove(currentAccount);
+                }
+
             }
+
+            if (accountToEdit == null) return;
+
+            //put account bank in the list
+            banklist.getBankAccountList().add(accountToEdit);
+            System.out.println("Thread with a name " + Thread.currentThread().getName() + " and id " + Thread.currentThread().getId() +
+                    " has modified the account");
+
+            System.out.println("The new details are: " + accountToEdit.getAccountNumber() + " " + accountToEdit.getAccountType() + " " + accountToEdit.getId());
+
+//            condition.signalAll();
+        } finally {
+            reentrantLock.unlock();
         }
 
-
-        if (accountToEdit.getId() == 0) return;
-
-
-        //put account bank in the list
-        bankAccountList.add(accountToEdit);
-        System.out.println("Thread with a name " + Thread.currentThread().getName() + " and id " + Thread.currentThread().getId() +
-                " has modified the account");
-        System.out.println("The new details are: " + accountToEdit.getAccountNumber() + " " + accountToEdit.getAccountType() + " " + accountToEdit.getId());
     }
 
     public void transferMoneyIn(BankAccount receiver, double amount) {
+
         reentrantLock.lock();
         try {
             System.out.println("Thread with a name " + Thread.currentThread().getName() + " and id " + Thread.currentThread().getId() +
+                            Thread.currentThread().getState() +
                     " is transferring money to account " + receiver.getAccountNumber());
             receiver.deposit(amount);
            condition.signalAll();
