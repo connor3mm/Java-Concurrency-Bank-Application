@@ -14,8 +14,7 @@ public class BankAccount {
     private ReentrantLock reentrantLock;
     private Condition condition;
     private int accountHolderCount = 0;
-    List<AccountHolder> list = new ArrayList<AccountHolder>();
-
+    List<AccountHolder> list = new ArrayList<>();
 
     public BankAccount() {
         this.id = 0;
@@ -27,12 +26,10 @@ public class BankAccount {
 
     }
 
-
     public BankAccount(int id, String accountType, AccountHolder accountHolder, String accountNumber) {
         this.id = id;
         this.accountType = accountType;
         this.accountHolder = accountHolder;
-        //this.balance = 0;
         this.accountNumber = accountNumber;
         reentrantLock = new ReentrantLock();
         condition = reentrantLock.newCondition();
@@ -82,13 +79,17 @@ public class BankAccount {
         accountHolderCount++;
     }
 
+    /**
+     * Method used for checking the balance
+     * @return
+     */
     public double getBalance() {
-        reentrantLock.lock();
 
+        reentrantLock.lock();
         try {
             System.out.println("Thread with a name " + Thread.currentThread().getName() + " and id " + Thread.currentThread().getId() +
                     " is checking the balance for account " + accountNumber);
-            System.out.println("The balance is: " + balance  + Calendar.getInstance().getTime());
+            System.out.println("The balance is: " + balance + Calendar.getInstance().getTime());
             condition.signalAll();
             return balance;
         } finally {
@@ -108,6 +109,10 @@ public class BankAccount {
         this.accountNumber = accountNumber;
     }
 
+    /**
+     * Deposit method used to deposit money to the bank account
+     * @param amount
+     */
     public void deposit(double amount) {
         System.out.println("The current balance in account number:" + accountNumber + " is: " + balance);
 
@@ -123,13 +128,18 @@ public class BankAccount {
         }
     }
 
-    public void withdraw(double amount) throws InterruptedException{
+    /**
+     * Withdraw method used to withdraw money from the bank account
+     * @param amount
+     * @throws InterruptedException
+     */
+    public void withdraw(double amount) throws InterruptedException {
         System.out.println("The current balance in account number: " + accountNumber + " is: " + balance);
         boolean stillWaiting = true;
         reentrantLock.lock();
         try {
-            while (balance < amount){
-                if (!stillWaiting){
+            while (balance < amount) {
+                if (!stillWaiting) {
                     Thread.currentThread().interrupt();
                 }
 

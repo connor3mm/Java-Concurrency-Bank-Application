@@ -6,6 +6,11 @@ public class AccountHolder {
     private String name;
     BankAccount bankAccount;
 
+    public AccountHolder(int id, String name, BankAccount bankAccount) {
+        this.id = id;
+        this.name = name;
+        this.bankAccount = bankAccount;
+    }
 
     public int getId() {
         return id;
@@ -23,12 +28,14 @@ public class AccountHolder {
         this.name = name;
     }
 
-    public AccountHolder(int id, String name, BankAccount bankAccount) {
-        this.id = id;
-        this.name = name;
-        this.bankAccount = bankAccount;
-    }
-
+    /**
+     * Method used for opening a new account
+     * @param id
+     * @param accountType
+     * @param accountHolder
+     * @param accountNumber
+     * @return
+     */
     public BankAccount openAccount(int id, String accountType, AccountHolder accountHolder, String accountNumber) {
         new BankAccount();
         return switch (accountType) {

@@ -33,7 +33,7 @@ public class DriverTest {
 
     /**
      * Test 1
-     *
+     * Two account holders are trying to check the balance simultaneously
      * @param bankAccount
      */
     public static void testBalance(BankAccount bankAccount) {
@@ -60,7 +60,7 @@ public class DriverTest {
 
     /**
      * Test 2
-     *
+     * One account holder is trying to check the balance while the other is depositing money
      * @param bankAccount
      */
     public static void checkBalanceAndDeposit(AccountHolder holder, BankAccount bankAccount) {
@@ -86,7 +86,12 @@ public class DriverTest {
 
     }
 
-
+    /**
+     * Test 2
+     * One account holder is trying to check the balance while the other is withdrawing money
+     * @param holder
+     * @param bankAccount
+     */
     public static void checkBalanceAndWithdraw(AccountHolder holder, BankAccount bankAccount) {
 
         for (int i = 0; i < 10; i++) {
@@ -110,7 +115,7 @@ public class DriverTest {
 
     /**
      * Test 3
-     *
+     * The two account holders are trying simultaneously to deposit/withdraw money & check the balance
      * @param bankAccount
      */
     public static void testDepositAndWithdraw(AccountHolder holder, BankAccount bankAccount) {
@@ -135,7 +140,8 @@ public class DriverTest {
 
     /**
      * Test 4
-     *
+     * Same as 3, but at the same time a bank employee is in the process of completing a money
+     * transfer in the account
      * @param employee
      * @param holder
      * @param bankAccount
@@ -166,6 +172,14 @@ public class DriverTest {
     }
 
 
+    /**
+     * Test 4
+     * Same as 3, but at the same time a bank employee is in the process of completing a money
+     * transfer out the account
+     * @param employee
+     * @param holder
+     * @param bankAccount
+     */
     public static void testingEmployeeTransferOut(Employee employee, AccountHolder holder, BankAccount bankAccount) {
 
         for (int i = 0; i < 10; i++) {
@@ -194,6 +208,7 @@ public class DriverTest {
 
     /**
      * Test 5
+     * There are insufficient funds to complete a withdraw
      * @param holder
      * @param bankAccount
      */
@@ -228,6 +243,7 @@ public class DriverTest {
 
     /**
      * Test 6
+     * Two bank employees are trying simultaneously to modify the details of a bank account
      * @param employee
      * @param employee2
      * @param bankAccount
@@ -236,7 +252,7 @@ public class DriverTest {
 
         //fix this
         for (int i = 0; i < 10; i++) {
-            Transaction transaction = new Transaction(Transaction.Type.EDIT, bankAccount, 1,"4567", "Premium", employee);
+            Transaction transaction = new Transaction(Transaction.Type.EDIT, bankAccount, 1, "4567", "Premium", employee);
             transaction.start();
         }
 
@@ -248,7 +264,7 @@ public class DriverTest {
 
 
         for (int i = 0; i < 10; i++) {
-            Transaction transaction = new Transaction(Transaction.Type.EDIT, bankAccount, 1,"7890", "Premium", employee2);
+            Transaction transaction = new Transaction(Transaction.Type.EDIT, bankAccount, 1, "7890", "Premium", employee2);
             transaction.start();
         }
 

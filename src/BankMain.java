@@ -4,18 +4,21 @@ import java.util.List;
 public class BankMain {
 
     private static  BankMain INSTANCE = null;
-    private BankAccount bankAccount = null;
-
-    public static BankMain getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new BankMain();
-        }
-        return  INSTANCE;
-    }
+    private static List<BankAccount> bankAccountList;
 
     private BankMain() { }
 
-    private List<BankAccount> bankAccountList = new ArrayList<>();
+    /**
+     * Public static method that returns the instance of the class
+     * @return INSTANCE
+     */
+    public static BankMain getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new BankMain();
+            bankAccountList = new ArrayList<>();
+        }
+        return INSTANCE;
+    }
 
     public List<BankAccount> getBankAccountList() {
         return bankAccountList;

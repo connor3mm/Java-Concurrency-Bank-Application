@@ -1,11 +1,12 @@
-public class Transaction extends Thread{
+public class Transaction extends Thread {
 
-    public static enum Type{
+    public static enum Type {
         DEPOSIT(1), WITHDRAW(2), BALANCE(3), TRANSFERIN(4), TRANSFEROUT(5), EDIT(6);
 
-        private Type(int value){
+        private Type(int value) {
         }
-    };
+    }
+    ;
 
     private Type transactionType;
     private BankAccount bankAccount;
@@ -15,7 +16,6 @@ public class Transaction extends Thread{
     private int id;
     private String newAccountNumber;
     private String newAccountType;
-
 
 
     public Transaction(Type transactionType, BankAccount bankAccount, double amount, Employee employee) {
@@ -46,7 +46,7 @@ public class Transaction extends Thread{
         this.employee = employee;
     }
 
-    public void run(){
+    public void run() {
         switch (this.transactionType) {
             case DEPOSIT:
                 this.bankAccount.deposit(this.amount);
@@ -72,7 +72,7 @@ public class Transaction extends Thread{
                 break;
 
             case EDIT:
-                this.employee.editAccount(id,newAccountNumber, newAccountType);
+                this.employee.editAccount(id, newAccountNumber, newAccountType);
                 break;
 
             default:
