@@ -134,7 +134,7 @@ public class BankAccount {
      * @throws InterruptedException
      */
     public void withdraw(double amount) throws InterruptedException {
-        System.out.println("The current balance in account number: " + accountNumber + " -> " + balance);
+        System.out.println("Current balance for account number: " + accountNumber + " -> " + balance);
         boolean stillWaiting = true;
         reentrantLock.lock();
         try {
