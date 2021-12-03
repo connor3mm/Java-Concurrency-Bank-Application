@@ -1,8 +1,11 @@
+import java.util.Arrays;
+import java.util.Objects;
+import java.util.Scanner;
 import java.util.Set;
 
 public class Task2 {
 
-    private static void getThreads() {
+    private static Thread[] getThreads() {
         ThreadGroup rootGroup = Thread.currentThread().getThreadGroup();
         ThreadGroup parentGroup;
         while ((parentGroup = rootGroup.getParent()) != null) {
@@ -25,14 +28,27 @@ public class Task2 {
             System.out.println();
             i++;
         }
+
+        return threads;
     }
 
 
-    public void searchByName(String name){
-
+    public static Thread searchByName(String name){
+        for(Thread t : Thread.getAllStackTraces().keySet()) {
+            if (t.getName().equals(name)){
+                return t;
+            }
+        }
+        return null;
     }
 
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter the name of the thread: ");
+        String name = scanner.nextLine();
+        Thread nameThread = searchByName(name);
+        System.out.println(nameThread);
+
         while(true){
             getThreads();
             try {
@@ -41,10 +57,6 @@ public class Task2 {
                 System.out.println(e);
             }
             System.out.println("-------------------------------------------");
-
-
-
-
         }
     }
 }
