@@ -63,7 +63,7 @@ public class Task2 {
         System.out.println("--------------------" + "\n");
 
         System.out.println("Enter the name of the thread group: ");
-        String name2 = scanner.nextLine();
+        String name2 = scanner.nextLine().toLowerCase();
 
         HashMap<Integer, Thread> newHashMap2;
         newHashMap2 = filterByThreadGroup(name2);
@@ -73,6 +73,7 @@ public class Task2 {
         System.out.println("--------------------" + "\n");
 
         System.out.println("Task 2 Part 1");
+        System.out.println("Listing all threads");
         while (true) {
             getThreads();
             try {
