@@ -65,10 +65,10 @@ public class Task2 {
         System.out.println("Enter the name of the thread group: ");
         String name2 = scanner.nextLine().toLowerCase();
 
-        HashMap<Integer, Thread> newHashMap2;
-        newHashMap2 = filterByThreadGroup(name2);
+        //HashMap<Integer, Thread> newHashMap2;
+        System.out.println(filterByThreadGroup(name2));
 
-        newHashMap2.forEach((key, value) -> System.out.println(key + " " + value));
+        //newHashMap2.forEach((key, value) -> System.out.println(key + " " + value));
 
         System.out.println("--------------------" + "\n");
 
