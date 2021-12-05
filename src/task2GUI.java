@@ -7,7 +7,7 @@ import java.util.List;
 public class task2GUI {
 
     private JPanel task2GUI;
-
+    public boolean getThreads = false;
     private JTabbedPane tabbedPane1;
     private JTextField searchTextField;
     private JButton SEARCHButton;
@@ -22,6 +22,7 @@ public class task2GUI {
         SEARCHButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                getThreads = false;
                 Thread value = Task2.searchByName(searchTextField.getText());
 
                 if (value == null) {
@@ -35,10 +36,11 @@ public class task2GUI {
         FILTERButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                getThreads = false;
                 List<Thread> value = Task2.filterByThreadGroup(searchTextField.getText());
 
                 if (value == null || value.size() == 0) {
-                    resultsTextArea.setText("There are no thread groups with that name. Sorry not sorry");
+                    resultsTextArea.setText("There are no thread groups with that name.");
                 } else {
                     resultsTextArea.setText("Threads within group " + searchTextField.getText() + ":\n" + value.toString());
                 }
@@ -48,7 +50,7 @@ public class task2GUI {
         newThreadButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                getThreads = false;
                 if (searchTextField.getText().isEmpty()) {
                     resultsTextArea.setText("Please provide a thread name to start one.");
                 } else {
@@ -62,7 +64,7 @@ public class task2GUI {
         stopThreadButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) { ;
-
+                getThreads = false;
                 if (searchTextField.getText().isEmpty()) {
                     resultsTextArea.setText("You need to enter a Thread name to stop one.");
 
@@ -80,34 +82,47 @@ public class task2GUI {
 
 
         allThreadsButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Thread[] threads = Task2.getThreadsGUI();
+            public void actionPerformed(ActionEvent evt) {
+                getThreads = true;
+                appendThreads();
+                Timer timer = new Timer(5000, new ActionListener() {
 
-                int i = 0;
+                    public void actionPerformed(ActionEvent evt) {
 
-                resultsTextArea.setText("");
-
-                while (threads[i] != null) {
-                    resultsTextArea.append("Name of thread: " + threads[i].getName());
-                    resultsTextArea.append("\n");
-                    resultsTextArea.append("ID of thread: " + threads[i].getId());
-                    resultsTextArea.append("\n");
-                    resultsTextArea.append("Priority of thread: " + threads[i].getPriority());
-                    resultsTextArea.append("\n");
-                    resultsTextArea.append("State of thread:" + threads[i].getState());
-                    resultsTextArea.append("\n");
-                    resultsTextArea.append("Is Daemon: " + threads[i].isDaemon());
-                    resultsTextArea.append("\n");
-                    resultsTextArea.append("----------------------------------------------");
-                    resultsTextArea.append("\n");
-                    i++;
-                }
+                        if (getThreads) {
+                            appendThreads();
+                        }
+                    }
+                }); // Execute task each 5000 millisecond
+                timer.setRepeats(getThreads);
+                timer.start();
 
             }
         });
 
 
+    }
+
+    private void appendThreads() {
+        Thread[] threads = Task2.getThreadsGUI();
+
+        int i = 0;
+
+        while (threads[i] != null) {
+            resultsTextArea.append("Name of thread: " + threads[i].getName());
+            resultsTextArea.append("\n");
+            resultsTextArea.append("ID of thread: " + threads[i].getId());
+            resultsTextArea.append("\n");
+            resultsTextArea.append("Priority of thread: " + threads[i].getPriority());
+            resultsTextArea.append("\n");
+            resultsTextArea.append("State of thread:" + threads[i].getState());
+            resultsTextArea.append("\n");
+            resultsTextArea.append("Is Daemon: " + threads[i].isDaemon());
+            resultsTextArea.append("\n");
+            resultsTextArea.append("----------------------------------------------");
+            resultsTextArea.append("\n");
+            i++;
+        }
     }
 
 
