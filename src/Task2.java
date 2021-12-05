@@ -61,6 +61,13 @@ public class Task2 {
                 .collect(Collectors.toList());
     }
 
+    private static void startNewThread(String nameOfThread) {
+        StartThread newThreadClass = new StartThread(nameOfThread);
+        Thread newThread = new Thread(newThreadClass);
+        newThread.start();
+    }
+
+
     public static Boolean stopThread(String threadName) {
         Thread threadToStop = searchByName(threadName);
         if(threadToStop == null) return false;
@@ -106,9 +113,7 @@ public class Task2 {
         System.out.println("Enter a name for the new thread: ");
         String nameOfThread = scanner.nextLine();
 
-        StartThread newThreadClass = new StartThread(nameOfThread);
-        Thread newThread = new Thread(newThreadClass);
-        newThread.start();
+        startNewThread(nameOfThread);
 
         try {
             Thread.sleep(10);
@@ -135,4 +140,6 @@ public class Task2 {
             System.out.println("--------------------");
         }
     }
+
+
 }
