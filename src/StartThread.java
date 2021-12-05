@@ -7,9 +7,6 @@ public class StartThread extends Thread{
 
     public void run() {
         Thread.currentThread().setName(name);
-        System.out.println("Created a new thread! with name: " + Thread.currentThread().getName());
-        while(!Thread.currentThread().isInterrupted()) {
-            System.out.println("Thread " + Thread.currentThread().getName() + " is running in the background.");
-        }
+        while (!Thread.currentThread().isInterrupted()) {}
     }
 }

@@ -29,6 +29,23 @@ public class Task2 {
 
     }
 
+    public static Thread[] getThreadsGUI() {
+        ThreadGroup rootGroup = Thread.currentThread().getThreadGroup();
+        ThreadGroup parentGroup;
+        while ((parentGroup = rootGroup.getParent()) != null) {
+            rootGroup = parentGroup;
+        }
+
+
+        Thread[] threads = new Thread[rootGroup.activeCount() + 1];
+        while (rootGroup.enumerate(threads, true) == threads.length) {
+            threads = new Thread[threads.length * 2];
+        }
+
+        return threads;
+    }
+
+
 
     public static Thread searchByName(String name) {
 //        for (Thread t : Thread.getAllStackTraces().keySet()) {
@@ -61,7 +78,7 @@ public class Task2 {
                 .collect(Collectors.toList());
     }
 
-    private static void startNewThread(String nameOfThread) {
+    public static void startNewThread(String nameOfThread) {
         StartThread newThreadClass = new StartThread(nameOfThread);
         Thread newThread = new Thread(newThreadClass);
         newThread.start();

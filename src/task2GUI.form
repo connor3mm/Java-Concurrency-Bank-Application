@@ -3,10 +3,116 @@
   <grid id="27dc6" binding="task2GUI" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="500" height="400"/>
+      <xy x="20" y="20" width="1121" height="696"/>
     </constraints>
     <properties/>
     <border type="none"/>
-    <children/>
+    <children>
+      <tabbedpane id="a913f" binding="tabbedPane1" default-binding="true">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="200" height="200"/>
+            <maximum-size width="1000" height="1000"/>
+          </grid>
+        </constraints>
+        <properties>
+          <background color="-16777216"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <grid id="b72e" layout-manager="GridLayoutManager" row-count="11" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <tabbedpane title="GUI"/>
+            </constraints>
+            <properties>
+              <background color="-720916"/>
+            </properties>
+            <border type="line"/>
+            <children>
+              <hspacer id="3125">
+                <constraints>
+                  <grid row="0" column="2" row-span="1" col-span="2" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+              </hspacer>
+              <vspacer id="c1777">
+                <constraints>
+                  <grid row="1" column="0" row-span="10" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                </constraints>
+              </vspacer>
+              <component id="cf506" class="javax.swing.JTextField" binding="searchTextField" default-binding="true">
+                <constraints>
+                  <grid row="1" column="2" row-span="3" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                    <preferred-size width="150" height="-1"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <horizontalAlignment value="2"/>
+                  <text value=""/>
+                </properties>
+              </component>
+              <component id="6a702" class="javax.swing.JButton" binding="FILTERButton" default-binding="true">
+                <constraints>
+                  <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="FILTER"/>
+                </properties>
+              </component>
+              <component id="450da" class="javax.swing.JButton" binding="SEARCHButton" default-binding="true">
+                <constraints>
+                  <grid row="2" column="1" row-span="4" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <background color="-15840051"/>
+                  <foreground color="-1115905"/>
+                  <hideActionText value="true"/>
+                  <text value="SEARCH"/>
+                  <verticalAlignment value="0"/>
+                  <verticalTextPosition value="0"/>
+                </properties>
+              </component>
+              <component id="d7a26" class="javax.swing.JButton" binding="newThreadButton" default-binding="true">
+                <constraints>
+                  <grid row="9" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="New Thread"/>
+                </properties>
+              </component>
+              <component id="6ddbd" class="javax.swing.JButton" binding="stopThreadButton" default-binding="true">
+                <constraints>
+                  <grid row="8" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="Stop Thread"/>
+                </properties>
+              </component>
+              <component id="7da56" class="javax.swing.JButton" binding="allThreadsButton" default-binding="true">
+                <constraints>
+                  <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="All Threads"/>
+                </properties>
+              </component>
+              <scrollpane id="8886">
+                <constraints>
+                  <grid row="5" column="2" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="1add7" class="javax.swing.JTextArea" binding="resultsTextArea">
+                    <constraints/>
+                    <properties/>
+                  </component>
+                </children>
+              </scrollpane>
+            </children>
+          </grid>
+        </children>
+      </tabbedpane>
+    </children>
   </grid>
 </form>
