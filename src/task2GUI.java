@@ -127,7 +127,7 @@ public class task2GUI {
 
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame("Task2");
+        JFrame frame = new JFrame("Task2 GUI");
         frame.setContentPane(new task2GUI().task2GUI);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
