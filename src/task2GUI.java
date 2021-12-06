@@ -134,5 +134,4 @@ public class task2GUI {
         frame.setVisible(true);
     }
 
-
 }

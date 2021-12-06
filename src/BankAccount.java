@@ -155,4 +155,11 @@ public class BankAccount {
         }
     }
 
+    public String toString() {
+        return "ID: " + this.id +
+                "\nBalance: £" + this.balance +
+                "\nAccount Type: " + this.accountType +
+                "\nAccount Number: " + this.accountNumber;
+    }
+
 }
