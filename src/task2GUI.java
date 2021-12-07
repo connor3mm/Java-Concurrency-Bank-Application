@@ -84,8 +84,9 @@ public class task2GUI {
         allThreadsButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 getThreads = true;
+                resultsTextArea.setText("");
                 appendThreads();
-                Timer timer = new Timer(5000, new ActionListener() {
+                Timer timer = new Timer(8000, new ActionListener() {
 
                     public void actionPerformed(ActionEvent evt) {
 
