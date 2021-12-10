@@ -48,12 +48,6 @@ public class Task2 {
 
 
     public static Thread searchByName(String name) {
-//        for (Thread t : Thread.getAllStackTraces().keySet()) {
-//            if (t.getName().equals(name)) {
-//                return t;
-//            }
-//        }
-//        return null;
 
         return Thread.getAllStackTraces().keySet().stream()
                 .filter(nameFilter -> nameFilter.getName().equals(name))
@@ -62,16 +56,6 @@ public class Task2 {
     }
 
     public static List<Thread> filterByThreadGroup(String name) {
-
-//        HashMap<Integer, Thread> newHashMap = new HashMap<>();
-//        int i = 0;
-//        for (Thread t : Thread.getAllStackTraces().keySet()) {
-//            if (t.getThreadGroup().getName().equals(name)) {
-//                newHashMap.put(i, t);
-//                i++;
-//            }
-//        }
-//        return newHashMap;
 
         return Thread.getAllStackTraces().keySet().stream()
                 .filter(groupName -> groupName.getThreadGroup().getName().equals(name))
@@ -119,10 +103,6 @@ public class Task2 {
             threadList.forEach(System.out::println);
         }
 
-//        HashMap<Integer, Thread> newHashMap2;
-//        newHashMap2 = filterByThreadGroup(name2);
-//
-//        newHashMap2.forEach((key, value) -> System.out.println(key + " " + value));
 
         System.out.println("--------------------" + "\n");
 
@@ -133,7 +113,7 @@ public class Task2 {
         startNewThread(nameOfThread);
 
         try {
-            Thread.sleep(10);
+            Thread.sleep(20);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

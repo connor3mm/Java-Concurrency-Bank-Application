@@ -85,7 +85,7 @@ public class Employee {
 
             System.out.println("The new details are: " + accountToEdit.getAccountNumber() + " " + accountToEdit.getAccountType() + " " + accountToEdit.getId() + "\n");
 
-//            condition.signalAll();
+            condition.signalAll();
         } finally {
             reentrantLock.unlock();
         }

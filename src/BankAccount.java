@@ -149,7 +149,7 @@ public class BankAccount {
                     " withdrawing money from account " + accountNumber + ", Date and Time: " + Calendar.getInstance().getTime());
             this.balance -= amount;
             System.out.println("The left balance is: " + balance + "\n");
-            condition.signalAll();
+
         } finally {
             reentrantLock.unlock();
         }

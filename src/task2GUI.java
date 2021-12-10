@@ -26,7 +26,7 @@ public class task2GUI {
                 Thread value = Task2.searchByName(searchTextField.getText());
 
                 if (value == null) {
-                    resultsTextArea.setText("There are no threads with that name. :-))))");
+                    resultsTextArea.setText("There are no threads with that name.");
                 } else {
                     resultsTextArea.setText(value.toString());
                 }

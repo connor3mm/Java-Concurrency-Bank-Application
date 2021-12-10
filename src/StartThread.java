@@ -7,6 +7,8 @@ public class StartThread extends Thread{
 
     public void run() {
         Thread.currentThread().setName(name);
-        while (!Thread.currentThread().isInterrupted()) {}
+        while (!Thread.currentThread().isInterrupted()) {
+
+        }
     }
 }
